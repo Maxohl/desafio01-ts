@@ -1,5 +1,6 @@
 # Desenvolvendo o Dio Bank
 desenvolvido por [Nathally Souza](https://github.com/nathyts)
+melhorado por [Maximilian C. Ohlweiler](https://github.com/Maxohl)
 
 #### Projeto desenvolvido com conceitos básicos de typescript
 
@@ -36,3 +37,7 @@ desenvolvido por [Nathally Souza](https://github.com/nathyts)
 [ ] Os atributos name e accountNumber não podem ser alterados internamente ou externamente
 
 [ ] Criar instancias para cada um dos tipos de conta no app.ts e executar os métodos possíveis.
+
+
+### Extra
+Foi adicionado uma verificação para garantir que o usuário não possa sacar mais do que o que ele já tem na conta.
