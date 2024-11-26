@@ -1,42 +1,69 @@
 export abstract class DioAccount {
-  private name: string
-  private readonly accountNumber: number
-  balance: number = 0
-  private status: boolean = true
+  private readonly name: string;
+  private readonly accountNumber: number;
+  private balance: number = 0;
+  private status: boolean = true;
 
-  constructor(name: string, accountNumber: number){
-    this.name = name
-    this.accountNumber = accountNumber
-  }
-
-  setName = (name: string): void => {
-    this.name = name
-    console.log('Nome alterado com sucesso!')
+  constructor(name: string, accountNumber: number) {
+    this.name = name;
+    this.accountNumber = accountNumber;
   }
 
   getName = (): string => {
-    return this.name
-  }
+    return this.name;
+  };
 
-  deposit = (): void => {
-    if(this.validateStatus()){
-      console.log('Voce depositou')
+  getAccountNumber = (): number => {
+    return this.accountNumber;
+  };
+
+  deposit = (amount: number): void => {
+    if (this.validateStatus()) {
+      if (amount > 0) {
+        this.balance += amount;
+        console.log(`Você depositou R$${amount}. Saldo atual: R$${this.balance}.`);
+      } else {
+        console.log('Valor para depósito deve ser maior que zero.');
+      }
     }
-  }
+  };
 
-  withdraw = (): void => {
-    console.log('Voce sacou')
-  }
+  withdraw = (amount: number): void => {
+    if (this.validateStatus()) {
+      if (amount > 0 && this.getCurrentBalance() >= amount) {
+        this.addToBalance(-amount); // Retira o valor do saldo
+        console.log(`Você sacou R$${amount}. Saldo atual: R$${this.getCurrentBalance()}.`);
+      } else if (amount <= 0) {
+        console.log('O valor para saque deve ser maior que zero.');
+      } else {
+        console.log('Não é possível realizar o saque devido a fundos insuficientes.');
+      }
+    }
+  };
+  
 
   getBalance = (): void => {
-    console.log(this.balance)
-  }
+    console.log(`Saldo atual: R$${this.balance}`);
+  };
 
-  private validateStatus = (): boolean => {
+  // Métodos protegidos para subclasses
+  protected addToBalance = (amount: number): void => {
+    this.balance += amount;
+  };
+
+  protected subtractFromBalance = (amount: number): void => {
+    this.balance -= amount;
+  };
+
+  protected getCurrentBalance = (): number => {
+    return this.balance;
+  };
+
+  protected validateStatus = (): boolean => {
     if (this.status) {
-      return this.status
+      return true;
     }
 
-    throw new Error('Conta inválida')
-  }
+    throw new Error('Conta inválida.');
+  };
 }
